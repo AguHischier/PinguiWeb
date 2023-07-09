@@ -16,43 +16,31 @@
   </form>
 
   <script>
-    function login() {
-      // Obtener los valores del formulario
-      var email = document.getElementById("email").value;
-      var password = document.getElementById("password").value;
 
-      // Crear el objeto de datos para enviar en la solicitud
-      var data = {
-        email: email,
-        password: password
-      };
+function login(event) {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-      // Realizar la solicitud POST a la API REST utilizando fetch
-      fetch("https://www.pinguino.com.ar/web/v1/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-      })
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error("Error en la solicitud a la API");
-        }
-      })
-      .then(responseJson => {
-        // Manejar la respuesta exitosa de la API REST
-        console.log(responseJson);
-        // Puedes redirigir al usuario a otra página o realizar otras acciones según la respuesta de la API
-      })
-      .catch(error => {
-        // Manejar el error de la solicitud a la API REST
-        console.error(error);
-        // Puedes mostrar un mensaje de error al usuario o realizar otras acciones según el error de la API
-      });
+  fetch('https://www.pinguino.com.ar/rest/v1/login', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'mail': email,
+      'cont': password
     }
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.response.resultado) {
+        alertify.alert("Correcto.");
+        // Realiza las acciones adicionales que necesites con los datos
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+    
   </script>
 </body>
 </html>
