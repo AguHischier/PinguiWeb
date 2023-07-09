@@ -23,6 +23,7 @@ function login(event) {
 
   fetch('https://www.pinguino.com.ar/rest/v1/login', {
     method: 'GET',
+    'mode': 'no-cors',
     headers: {
       'Content-Type': 'application/json',
       'mail': email,
