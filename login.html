@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Formulario de inicio de sesión</title>
+</head>
+<body>
+  <h1>Inicio de sesión</h1>
+  <form>
+    <label for="email">Email:</label>
+    <input type="email" id="email" required>
+    <br>
+    <label for="password">Contraseña:</label>
+    <input type="password" id="password" required>
+    <br>
+    <button type="button" onclick="login()">Iniciar sesión</button>
+  </form>
+
+  <script>
+    function login() {
+      // Obtener los valores del formulario
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("password").value;
+
+      // Crear el objeto de datos para enviar en la solicitud
+      var data = {
+        email: email,
+        password: password
+      };
+
+      // Realizar la solicitud POST a la API REST utilizando fetch
+      fetch("https://www.pinguino.com.ar/web/v1/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Error en la solicitud a la API");
+        }
+      })
+      .then(responseJson => {
+        // Manejar la respuesta exitosa de la API REST
+        console.log(responseJson);
+        // Puedes redirigir al usuario a otra página o realizar otras acciones según la respuesta de la API
+      })
+      .catch(error => {
+        // Manejar el error de la solicitud a la API REST
+        console.error(error);
+        // Puedes mostrar un mensaje de error al usuario o realizar otras acciones según el error de la API
+      });
+    }
+  </script>
+</body>
+</html>
