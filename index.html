@@ -31,16 +31,77 @@ function login(event) {
       'hosturl': "https://www.pinguino.com.ar"
     }
   })
-    .then(response => response.json())
+  .then(response => response.json())
     .then(data => {
       if (data.response.resultado) {
-            console.log("Correcto.");
-        // Realiza las acciones adicionales que necesites con los datos
+        const doc = data.response.obtenerUsu.obtenerUsu[0]["doc-clw"];
+        const mail = data.response.obtenerUsu.obtenerUsu[0]["mai-clw"];
+        const nombre = data.response.obtenerUsu.obtenerUsu[0]["apn-clw"];
+        const sucursal = data.response.obtenerUsu.obtenerUsu[0]["suc-clw"];
+        const empresa= data.response.obtenerUsu.obtenerUsu[0]["empresa"];
+        const ciudad= data.response.obtenerUsu.obtenerUsu[0]["ciudad"];
+        //Eliminar cookies
+        document.cookie = "usuario=; max-age=0";
+        document.cookie = "nombre=; max-age=0";
+        document.cookie = "cliente=; max-age=0";
+        document.cookie = "empresa=; max-age=0";
+        
+        //Crear cokies nuevas
+        document.cookie='usuario=' + mail + '; expires=; path=';
+        document.cookie='docclw=' + doc + '; expires=; path=';
+        document.cookie='nombre=' + nombre + '; expires=; path=';
+        document.cookie='cliente=' + data.response.resultado + '; expires=; path=';
+        document.cookie='empresa=' + empresa + '; expires=; path=';
+        
+        	//SI INICIÓ SESION DESPUES DE HABER RECUPERADO LA CONTRASEÑA LE ABRIMOS EL POP-UP PARA QUE CAMBIE LA CONTRASEÑA
+        if(data.response.mensaje==="recuperar"){
+        	window.parent.location.assign(window.parent.location.protocol + "//" + window.parent.location.hostname + ":" + window.parent.location.port + "/web/index.r?accion=clave");
+        }
+        	//COMPROBAMOS SI LA ULTIMA SUCURSAL QUE USÓ ES IGUAL A LA ACTUAL.
+        if (sucursal.toString() !== cookieSucursal.toString() || ciudad.toString() !== cookieCiudad.toString()) {
+      	  window.parent.alertify.confirm('Confirmar ubicaci&oacute;n', 'La sucursal o ciudad recientemente seleccionada es distinta a la última utilizada.<br>Desea cambiar a la última que utilizó?',
+      	    function() {
+      	      document.cookie = 'sucursal=' + sucursal + '; expires=; path='; document.cookie='ciudad=' + ciudad + '; expires=; path=';
+      	      window.parent.location.assign(window.parent.location.protocol + "//" + window.parent.location.hostname + ":" + window.parent.location.port + "/web/index.r?accion=aviso");
+      	    },
+      	    function() {
+      	      document.cookie = 'sucursal=' + cookieSucursal + '; expires=; path='; document.cookie='ciudad=' + cookieCiudad + '; expires=; path=';
+      	      window.parent.location.assign(window.parent.location.protocol + "//" + window.parent.location.hostname + ":" + window.parent.location.port + "/web/index.r?accion=aviso");
+      	    }).set('labels', { ok: 'Cambiar', cancel: 'Selección reciente' });
+      	}else{
+      		window.parent.location.assign(window.parent.location.protocol + "//" + window.parent.location.hostname + ":" + window.parent.location.port + "/web/index.r?accion=aviso");
+      		location.reload();
+      	}
+        
+        	//EL LOGIN NO ES CORRECTO, MOSTRAMOS EL MENSAJE MAIL O CONTRASEÑA INCORRECTO
+       	}else{
+        window.parent.document.getElementById("msjLogin").innerHTML=data.response.mensaje;
+        	//SI NO VALIDO EL MAIL LE MOSTRAMOS EL POP-UP DE VALIDACION USUARIO
+        if(data.response.mensaje==="validar"){
+        	window.parent.document.getElementById('alta').classList.remove('show');
+	    	window.parent.document.formValidacion.mailUsuario.value= emailLogin;
+	        window.parent.document.getElementById('mailIngresado').innerHTML = emailLogin;
+	        window.parent.document.getElementById("popUpValidacion").click();
+	        
+        }else{
+        	//Borramos las cookies
+        document.cookie = "usuario=; max-age=0";
+        document.cookie = "nombre=; max-age=0";
+        document.cookie = "cliente=; max-age=0";
+        const mensaje = data.response.mensaje;
+        window.parent.document.getElementById("msjLogin").innerHTML = mensaje;
+        }
       }
     })
     .catch(error => {
       console.error('Error:', error);
+      console.log(error);
+      window.parent.alertify.alert("Error","Existi\u00F3 un error desconocido. Intente nuevamente.", function(){
+    	  window.parent.location.pathname="web/index.r"});
+     
+           this.close();
     });
+
 }
     
   </script>
