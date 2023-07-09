@@ -26,13 +26,14 @@ function login(event) {
     headers: {
       'Content-Type': 'application/json',
       'mail': email,
-      'cont': password
+      'cont': password,
+      'hosturl': "https://www.pinguino.com.ar"
     }
   })
     .then(response => response.json())
     .then(data => {
       if (data.response.resultado) {
-        alertify.alert("Correcto.");
+            console.log("Correcto.");
         // Realiza las acciones adicionales que necesites con los datos
       }
     })
