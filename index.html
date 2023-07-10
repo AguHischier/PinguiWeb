@@ -16,7 +16,7 @@
   </form>
 
   <script>
-
+/*
 const login = async()=> {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
@@ -37,7 +37,33 @@ const login = async()=> {
   console.log(user);
 
 }
+*/
+function login(event) {
+  const email = $('#emailLogin').val();
+  const password = $('#passLogin').val();
 
+  fetch('https://www.pinguino.com.ar/rest/v1/login', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'mail': email,
+      'cont': password,
+      'hosturl': 'https://www.pinguino.com.ar'
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.response.resultado) {
+        console.log("Correcto.");
+        // Realiza las acciones adicionales que necesites con los datos
+      }else{
+        console.log("Incorrecto.");
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
 
   </script>
 </body>
