@@ -43,6 +43,7 @@ function login(event) {
   const password = document.getElementById("password").value;
 
   fetch('https://www.pinguino.com.ar/rest/v1/login', {
+    mode: 'no-cors',
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
