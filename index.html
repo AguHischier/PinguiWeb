@@ -17,6 +17,8 @@
 
   <script>
     function login (){
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
     var url = 'https://www.pinguino.com.ar/rest/v1/login';
     var data = {'mail': email,
       'cont': password,
