@@ -12,11 +12,11 @@
     <label for="password">Contraseña:</label>
     <input type="password" id="password" required>
     <br>
-    <button type="button" onclick="login1()">Iniciar sesión</button>
     <button type="button" onclick="login()">Iniciar sesión</button>
   </form>
 
   <script>
+    function login (){
     var url = 'https://www.pinguino.com.ar/rest/v1/login';
     var data = {'mail': email,
       'cont': password,
@@ -31,7 +31,7 @@ fetch(url, {
 }).then(res => res.json())
 .catch(error => console.error('Error:', error))
 .then(response => console.log('Success:', response));
-
+}
   </script>
 </body>
 </html>
