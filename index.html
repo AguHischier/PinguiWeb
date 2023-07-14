@@ -32,12 +32,21 @@ const login1 = async()=> {
       'password': password,
       'hosturl': 'https://www.pinguino.com.ar'
     }
-  });
-  console.log(repuesta);
-  const user = await repuesta.json();
-  console.log(user);
-
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.response.resultado) {
+        console.log("Correcto.");
+        // Realiza las acciones adicionales que necesites con los datos
+      }else{
+        console.log("Incorrecto.");
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
 }
+
 
 function login(event) {
   const email = document.getElementById("email").value;
