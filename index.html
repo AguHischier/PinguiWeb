@@ -16,24 +16,78 @@
   </form>
 
   <script>
-    function login (){
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-    var url = 'https://www.pinguino.com.ar/rest/v1/login';
-    var data = {'mail': email,
-      'cont': password,
-      'hosturl': 'https://www.pinguino.com.ar'};
-
-fetch(url, {
-  method: 'GET', // or 'PUT'
-  headers: JSON.stringify(data), // data can be `string` or {object}!
-  headers:{
-    'Content-Type': 'application/json'
+   function login() {
+    
+    const requestData = {
+  request: {
+    mail: document.getElementById("email").value,
+    cont: document.getElementById("password").value
   }
-}).then(res => res.json())
-.catch(error => console.error('Error:', error))
-.then(response => console.log('Success:', response));
+};
+
+fetch('https://www.pinguino.com.ar:8443/rest/v1/login', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(requestData)
+})
+  .then(response => response.json())
+    .then(data => {
+      if (data.response.resultado) {
+        const doc = data.response.obtenerUsu.obtenerUsu[0]["doc-clw"];
+        const mail = data.response.obtenerUsu.obtenerUsu[0]["mai-clw"];
+        const nombre = data.response.obtenerUsu.obtenerUsu[0]["apn-clw"];
+        const sucursal = data.response.obtenerUsu.obtenerUsu[0]["suc-clw"];
+        const empresa= data.response.obtenerUsu.obtenerUsu[0]["empresa"];
+        const ciudad= data.response.obtenerUsu.obtenerUsu[0]["ciudad"];
+        const codusu= data.response.obtenerUsu.obtenerUsu[0]["codusu"];
+        const cliente = data.response.resultado;
+        //Eliminar cookies
+        document.cookie = "usuario=; max-age=0";
+        document.cookie = "nombre=; max-age=0";
+        document.cookie = "cliente=; max-age=0";
+        document.cookie = "empresa=; max-age=0";
+        document.cookie = "cliente=; max-age=0";
+        document.cookie = "id=; max-age=0";
+        
+        //Crear cokies nuevas
+        document.cookie='usuario=' + mail + '; expires=; path=';
+        document.cookie='docclw=' + doc + '; expires=; path=';
+        document.cookie='nombre=' + nombre + '; expires=; path=';
+        document.cookie='cliente=' + cliente + '; expires=; path=';
+        document.cookie='empresa=' + empresa + '; expires=; path=';
+        document.cookie='cod=' + codusu + '; expires=; path=';
+        document.cookie='id=' + codusu + '; expires=; path=';
+        
+        	
+        
+        //location.reload();
+          console.log("true")	
+      		      		
+      	
+        	
+        
+        	//EL LOGIN NO ES CORRECTO, MOSTRAMOS EL MENSAJE MAIL O CONTRASEÑA INCORRECTO
+       	}else{
+       	
+        	//Borramos las cookies
+        document.cookie = "usuario=; max-age=0";
+        document.cookie = "nombre=; max-age=0";
+        document.cookie = "cliente=; max-age=0";
+        document.cookie = "id=; max-age=0";
+        const mensaje = data.response.mensaje;
+        console.log(mensaje);
+        
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      console.log(error);
+           
+    });
 }
   </script>
 </body>
 </html>
+
