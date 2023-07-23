@@ -1,21 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Formulario de inicio de sesión</title>
+  <link rel="stylesheet" href="stilos.css">
+  <title>Pruebas para pinguino web</title>
 </head>
 <body>
-  <h1>Inicio de sesión</h1>
-  <form>
-    <label for="email">Email:</label>
-    <input type="email" id="email" required>
-    <br>
-    <label for="password">Contraseña:</label>
-    <input type="password" id="password" required>
-    <br>
-    <button type="button" onclick="login()">Iniciar sesión</button>
+  <div id="imagen"><img src="Img/www.pinguino.com.ar_web_index.r.png" alt="BarraDeInformacios" ></div>
+  <h1>PINGUINO</h1>
+  <h2>Inicio de sesión</h2>
+
+  <form id="Recuadro" class="Centrar">
+    <div>
+      <label for="email">Email:</label>
+       <div>
+        <input type="email" id="email" required>
+         <br>
+         <label for="password">Contraseña:</label>
+          <div>
+            <input type="password" id="password" required>
+              <div>
+              <br>
+    <button id="Logeo" type="button" onclick="login()" >Iniciar sesión</button>
+              </div>
+           </div>
+        </div>
+      </div>
   </form>
 
-  <script>
+  <script >
    function login() {
     
     const requestData = {
@@ -64,7 +76,7 @@ fetch('https://www.pinguino.com.ar:8443/rest/v1/login', {
         
         //location.reload();
           console.log("true")	
-      		      		
+          window.location.href = "https://www.pinguino.com.ar/web/index.r"; 
       	
         	
         
@@ -88,6 +100,7 @@ fetch('https://www.pinguino.com.ar:8443/rest/v1/login', {
     });
 }
   </script>
+  
 </body>
 </html>
 

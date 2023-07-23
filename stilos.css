@@ -1,0 +1,16 @@
+h1, h2{
+    color:red;
+text-align: center;}
+
+#Recuadro{
+      display: flex;
+      justify-content: center;
+
+}
+#imagen{
+  display: flex;
+      justify-content: center;
+}
+button{
+ color: red;
+}
