@@ -5,12 +5,19 @@
   <title>Pruebas para pinguino web</title>
 </head>
 <body>
+    
   <div id="imagen"><img src="Img/www.pinguino.com.ar_web_index.r.png" alt="BarraDeInformacios" ></div>
   <h1>PINGUINO</h1>
-  <h2>Inicio de sesión</h2>
 
+ <script> $(document).ready(function(){
+    $("#Ingresar").on("click" , function(){
+      $("#Recuadro").fadeIn("slow");
+
+    });
+  });</script>
   <form id="Recuadro" class="Centrar">
     <div>
+    <h2>Inicio de sesión</h2>
       <label for="email">Email:</label>
        <div>
         <input type="email" id="email" required>
@@ -26,8 +33,9 @@
         </div>
       </div>
   </form>
-
+ 
   <script >
+    
    function login() {
     
     const requestData = {
@@ -98,6 +106,8 @@ fetch('https://www.pinguino.com.ar:8443/rest/v1/login', {
       console.log(error);
            
     });
+    
+
 }
   </script>
   
